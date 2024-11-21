@@ -6,6 +6,7 @@ use App\Repository\ServiceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Ignore;
 
 #[ORM\Entity(repositoryClass: ServiceRepository::class)]
 class Service
@@ -16,7 +17,7 @@ class Service
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private ?string $value = null;
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;
@@ -25,6 +26,7 @@ class Service
      * @var Collection<int, Location>
      */
     #[ORM\ManyToMany(targetEntity: Location::class, mappedBy: 'services')]
+    #[Ignore]
     private Collection $locations;
 
     public function __construct()
@@ -37,14 +39,14 @@ class Service
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getValue(): ?string
     {
-        return $this->name;
+        return $this->value;
     }
 
-    public function setName(string $name): static
+    public function setValue(string $value): static
     {
-        $this->name = $name;
+        $this->value = $value;
 
         return $this;
     }
